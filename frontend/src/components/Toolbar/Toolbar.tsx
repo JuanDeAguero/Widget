@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { useApp } from '../../contexts/AppContext';
 import { IconButton, Button } from '../../styles/GlobalStyles';
+import { UserMenu } from '../Auth/UserMenu';
 
 const ToolbarContainer = styled.div`
   height: ${props => props.theme.sizes.toolbarHeight};
@@ -132,6 +133,8 @@ export function Toolbar() {
         >
           <Folder size={16} />
         </IconButton>
+        <div style={{ width: '16px' }} />
+        <UserMenu />
       </ToolbarSection>
     </ToolbarContainer>
   );
