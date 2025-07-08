@@ -128,12 +128,13 @@ export const UserMenu: React.FC = () => {
     setIsOpen(false);
   };
 
-  const getInitials = (firstName?: string, lastName?: string, email?: string) => {
-    if (firstName && lastName) {
-      return `${firstName[0]}${lastName[0]}`.toUpperCase();
-    }
-    if (firstName) {
-      return firstName[0].toUpperCase();
+  const getInitials = (name?: string, email?: string) => {
+    if (name) {
+      const nameParts = name.trim().split(' ');
+      if (nameParts.length >= 2) {
+        return `${nameParts[0][0]}${nameParts[nameParts.length - 1][0]}`.toUpperCase();
+      }
+      return nameParts[0][0].toUpperCase();
     }
     if (email) {
       return email[0].toUpperCase();
@@ -141,12 +142,9 @@ export const UserMenu: React.FC = () => {
     return 'U';
   };
 
-  const getDisplayName = (firstName?: string, lastName?: string, email?: string) => {
-    if (firstName && lastName) {
-      return `${firstName} ${lastName}`;
-    }
-    if (firstName) {
-      return firstName;
+  const getDisplayName = (name?: string, email?: string) => {
+    if (name && name.trim()) {
+      return name;
     }
     return email || 'User';
   };
@@ -157,10 +155,10 @@ export const UserMenu: React.FC = () => {
     <UserMenuContainer ref={menuRef}>
       <UserButton onClick={() => setIsOpen(!isOpen)}>
         <UserAvatar>
-          {getInitials(state.user.firstName, state.user.lastName, state.user.email)}
+          {getInitials(state.user.name, state.user.email)}
         </UserAvatar>
         <UserName>
-          {getDisplayName(state.user.firstName, state.user.lastName, state.user.email)}
+          {getDisplayName(state.user.name, state.user.email)}
         </UserName>
         <ChevronIcon $isOpen={isOpen} />
       </UserButton>
@@ -168,7 +166,7 @@ export const UserMenu: React.FC = () => {
       <DropdownMenu $isOpen={isOpen}>
         <DropdownHeader>
           <DropdownUserName>
-            {getDisplayName(state.user.firstName, state.user.lastName, state.user.email)}
+            {getDisplayName(state.user.name, state.user.email)}
           </DropdownUserName>
           <DropdownUserEmail>{state.user.email}</DropdownUserEmail>
         </DropdownHeader>
