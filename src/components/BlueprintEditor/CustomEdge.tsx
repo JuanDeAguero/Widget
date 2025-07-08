@@ -10,7 +10,6 @@ export function CustomEdge({
   targetX,
   targetY,
   style = {},
-  data,
   markerEnd,
   selected,
 }: EdgeProps) {
