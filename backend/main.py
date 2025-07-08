@@ -11,10 +11,8 @@ from schemas import UserCreate, UserLogin, UserResponse, AuthResponse, Token
 from auth import create_access_token, verify_token
 import crud
 
-# Create database tables
 Base.metadata.create_all(bind=engine)
 
-# Initialize FastAPI app
 app = FastAPI(
     title="Widget Authentication API",
     description="Authentication backend for Widget app using Neon database",
@@ -22,7 +20,6 @@ app = FastAPI(
     debug=settings.debug
 )
 
-# Configure CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
@@ -31,7 +28,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Print environment info on startup
 print(f"🚀 Starting Widget API in {settings.environment.upper()} mode")
 print(f"🔐 Debug mode: {settings.debug}")
 print(f"🌐 CORS origins: {settings.cors_origins}")
@@ -40,9 +36,7 @@ if settings.is_development:
 else:
     print(f"🗄️  Database: Production (Neon)")
 
-# Security
 security = HTTPBearer()
-
 
 async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
@@ -69,18 +63,15 @@ async def get_current_user(
     
     return user
 
-
 @app.get("/")
 async def root():
     """Health check endpoint"""
     return {"message": "Widget Authentication API is running!"}
 
-
 @app.post("/api/auth/register", response_model=AuthResponse)
 async def register(user: UserCreate, db: Session = Depends(get_db)):
     """Register a new user"""
     try:
-        # Check if user already exists
         existing_user = crud.get_user_by_email(db, email=user.email)
         if existing_user:
             raise HTTPException(
@@ -88,10 +79,8 @@ async def register(user: UserCreate, db: Session = Depends(get_db)):
                 detail="Email already registered"
             )
         
-        # Create new user
         db_user = crud.create_user(db, user=user)
         
-        # Create access token
         access_token = create_access_token(data={"sub": db_user.email})
         
         return AuthResponse(
@@ -105,11 +94,9 @@ async def register(user: UserCreate, db: Session = Depends(get_db)):
             detail=str(e)
         )
 
-
 @app.post("/api/auth/login", response_model=AuthResponse)
 async def login(user_login: UserLogin, db: Session = Depends(get_db)):
     """Login user"""
-    # Authenticate user
     user = crud.authenticate_user(db, user_login.email, user_login.password)
     
     if not user:
@@ -119,7 +106,6 @@ async def login(user_login: UserLogin, db: Session = Depends(get_db)):
             headers={"WWW-Authenticate": "Bearer"},
         )
     
-    # Create access token
     access_token = create_access_token(data={"sub": user.email})
     
     return AuthResponse(
@@ -127,19 +113,16 @@ async def login(user_login: UserLogin, db: Session = Depends(get_db)):
         token=access_token
     )
 
-
 @app.get("/api/auth/me", response_model=UserResponse)
 async def get_current_user_info(current_user = Depends(get_current_user)):
     """Get current user information"""
     return UserResponse.from_orm(current_user)
-
 
 @app.post("/api/auth/refresh", response_model=Token)
 async def refresh_token(current_user = Depends(get_current_user)):
     """Refresh access token"""
     access_token = create_access_token(data={"sub": current_user.email})
     return Token(access_token=access_token, token_type="bearer")
-
 
 if __name__ == "__main__":
     import uvicorn

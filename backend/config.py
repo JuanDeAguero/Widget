@@ -3,7 +3,6 @@ from typing import List, Union
 from pydantic import field_validator
 import os
 
-
 class Settings(BaseSettings):
     database_url: str = "postgresql://user:pass@localhost/db"
     jwt_secret_key: str = "secret"
@@ -22,8 +21,8 @@ class Settings(BaseSettings):
 
     model_config = {
         "env_file": [
-            ".env",  # Default fallback
-            f".env.{os.getenv('ENVIRONMENT', 'development')}"  # Environment-specific
+            ".env",
+            f".env.{os.getenv('ENVIRONMENT', 'development')}"
         ]
     }
 
@@ -34,6 +33,5 @@ class Settings(BaseSettings):
     @property
     def is_production(self) -> bool:
         return self.environment == "production"
-
 
 settings = Settings()

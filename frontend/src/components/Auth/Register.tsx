@@ -268,7 +268,6 @@ export const Register: React.FC<RegisterProps> = ({ onToggleMode }) => {
     setSuccess(false);
 
     if (formData.password !== formData.confirmPassword) {
-      // We'll need to add a setError method to the auth context
       return;
     }
 
@@ -284,7 +283,6 @@ export const Register: React.FC<RegisterProps> = ({ onToggleMode }) => {
         onToggleMode();
       }, 2000);
     } catch (error) {
-      // Error handling is done in the auth context
     }
   };
 

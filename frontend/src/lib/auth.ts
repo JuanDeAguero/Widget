@@ -28,18 +28,15 @@ export interface LoginData {
 export class AuthService {
   static async register(data: RegisterData): Promise<{ user: AuthUser; token: string }> {
     try {
-      // Check if user already exists
       const existingUser = await db.select().from(users).where(eq(users.email, data.email));
       
       if (existingUser.length > 0) {
         throw new Error('User with this email already exists');
       }
 
-      // Hash password
       const saltRounds = 12;
       const hashedPassword = await bcrypt.hash(data.password, saltRounds);
 
-      // Create user
       const newUser: NewUser = {
         email: data.email,
         password: hashedPassword,
@@ -49,7 +46,6 @@ export class AuthService {
 
       const [createdUser] = await db.insert(users).values(newUser).returning();
 
-      // Generate JWT token
       const token = jwt.sign(
         { 
           userId: createdUser.id, 
@@ -75,21 +71,18 @@ export class AuthService {
 
   static async login(data: LoginData): Promise<{ user: AuthUser; token: string }> {
     try {
-      // Find user by email
       const [user] = await db.select().from(users).where(eq(users.email, data.email));
 
       if (!user) {
         throw new Error('Invalid email or password');
       }
 
-      // Verify password
       const isPasswordValid = await bcrypt.compare(data.password, user.password);
 
       if (!isPasswordValid) {
         throw new Error('Invalid email or password');
       }
 
-      // Generate JWT token
       const token = jwt.sign(
         { 
           userId: user.id, 
@@ -117,7 +110,6 @@ export class AuthService {
     try {
       const decoded = jwt.verify(token, JWT_SECRET) as { userId: number; email: string };
       
-      // Get user from database
       const [user] = await db.select().from(users).where(eq(users.id, decoded.userId));
 
       if (!user) {

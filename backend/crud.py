@@ -5,7 +5,6 @@ from schemas import UserCreate
 from auth import get_password_hash, verify_password
 from typing import Optional
 
-
 def get_user_by_email(db: Session, email: str) -> Optional[User]:
     """Get user by email"""
     return db.query(User).filter(User.email == email).first()
@@ -14,7 +13,6 @@ def get_user_by_email(db: Session, email: str) -> Optional[User]:
 def get_user_by_id(db: Session, user_id: int) -> Optional[User]:
     """Get user by ID"""
     return db.query(User).filter(User.id == user_id).first()
-
 
 def create_user(db: Session, user: UserCreate) -> User:
     """Create a new user"""
@@ -33,7 +31,6 @@ def create_user(db: Session, user: UserCreate) -> User:
     except IntegrityError:
         db.rollback()
         raise ValueError("User with this email already exists")
-
 
 def authenticate_user(db: Session, email: str, password: str) -> Optional[User]:
     """Authenticate user with email and password"""

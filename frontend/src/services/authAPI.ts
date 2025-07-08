@@ -1,9 +1,5 @@
-// API service for authentication
-// This will connect to your backend API that interfaces with Neon
-
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
 
-// Log API configuration in development
 if (import.meta.env.DEV) {
   console.log('🔗 API Base URL:', API_BASE_URL);
   console.log('🌍 Environment:', import.meta.env.VITE_ENVIRONMENT || 'development');
@@ -86,5 +82,4 @@ class AuthAPI {
   }
 }
 
-// Use real API now that backend is ready
 export const authAPI = new AuthAPI();

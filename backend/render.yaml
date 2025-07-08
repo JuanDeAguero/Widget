@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: widget-api
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: ENVIRONMENT=production uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DATABASE_URL
+        value: postgresql://neondb_owner:npg_t41hdYVsXMfy@ep-blue-surf-a2rk6ul3-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: JWT_ALGORITHM
+        value: HS256
+      - key: JWT_ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 30
+      - key: CORS_ORIGINS
+        value: https://widget-a2mw39j36-juans-projects-c7967213.vercel.app,http://localhost:5173
+      - key: CORS_ORIGINS
+        value: https://widget-a2mw39j36-juans-projects-c7967213.vercel.app,http://localhost:5173

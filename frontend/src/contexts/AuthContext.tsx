@@ -2,7 +2,6 @@ import { createContext, useContext, useReducer, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { authAPI, type AuthUser, type RegisterData, type LoginData } from '../services/authAPI';
 
-// Re-export types for convenience
 export type { AuthUser, RegisterData, LoginData };
 
 interface AuthState {
@@ -88,13 +87,11 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Simple in-memory user storage (replace with API calls to your backend)
 const STORAGE_KEY = 'widget_auth';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // Load saved auth state on mount
   useEffect(() => {
     const loadAuthState = async () => {
       try {
@@ -120,7 +117,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       dispatch({ type: 'LOGIN_START' });
       const result = await authAPI.login(data);
       
-      // Save to localStorage
       localStorage.setItem(STORAGE_KEY, JSON.stringify(result));
       
       dispatch({ type: 'LOGIN_SUCCESS', payload: result });
@@ -135,7 +131,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       dispatch({ type: 'REGISTER_START' });
       const result = await authAPI.register(data);
       
-      // Save to localStorage
       localStorage.setItem(STORAGE_KEY, JSON.stringify(result));
       
       dispatch({ type: 'REGISTER_SUCCESS', payload: result });
