@@ -9,33 +9,12 @@ const NarrowScreenContainer = styled.div`
   height: 100vh;
   background: linear-gradient(135deg, #1a202c 0%, #2d3748 25%, #4a5568 100%);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 40px 20px;
   box-sizing: border-box;
-`;
-
-const MessageCard = styled.div`
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  padding: 40px;
-  max-width: 500px;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  animation: slideIn 0.5s ease-out;
-
-  @keyframes slideIn {
-    from {
-      transform: translateY(20px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
 `;
 
 const IconWrapper = styled.div`
@@ -75,7 +54,9 @@ const RequirementText = styled.div`
   font-size: 14px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
+  max-width: 600px;
 `;
 
 const CurrentResolution = styled.div`
@@ -107,22 +88,20 @@ export const ResponsiveWrapper: React.FC<ResponsiveWrapperProps> = ({ children }
   if (windowWidth < MIN_WIDTH) {
     return (
       <NarrowScreenContainer>
-        <MessageCard>
-          <IconWrapper>
-            <Monitor size={40} />
-          </IconWrapper>
-          <Title>Desktop Resolution Required</Title>
-          <Description>
-            This application is designed for wide desktop screens and requires a minimum width of {MIN_WIDTH} pixels to function properly.
-          </Description>
-          <RequirementText>
-            <AlertTriangle size={24} />
-            Please use a desktop computer or expand your browser window to continue.
-          </RequirementText>
-          <CurrentResolution>
-            Current resolution: {windowWidth} × {window.innerHeight} px
-          </CurrentResolution>
-        </MessageCard>
+        <IconWrapper>
+          <Monitor size={40} />
+        </IconWrapper>
+        <Title>Desktop Resolution Required</Title>
+        <Description>
+          This application is designed for wide desktop screens and requires a minimum width of {MIN_WIDTH} pixels to function properly.
+        </Description>
+        <RequirementText>
+          <AlertTriangle size={24} />
+          Please use a desktop computer or expand your browser window to continue.
+        </RequirementText>
+        <CurrentResolution>
+          Current resolution: {windowWidth} × {window.innerHeight} px
+        </CurrentResolution>
       </NarrowScreenContainer>
     );
   }
