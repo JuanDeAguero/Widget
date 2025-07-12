@@ -15,6 +15,7 @@ const NarrowScreenContainer = styled.div`
   padding: 40px 20px;
   box-sizing: border-box;
   text-align: center;
+  padding-bottom: 70px;
 `;
 
 const IconWrapper = styled.div`
