@@ -2,6 +2,7 @@ import { ThemeProvider } from 'styled-components';
 import { AppProvider } from './contexts/AppContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/Auth/ProtectedRoute';
+import { ResponsiveWrapper } from './components/ResponsiveWrapper/ResponsiveWrapper';
 import { GlobalStyle } from './styles/GlobalStyles';
 import { theme } from './styles/theme';
 import { Toolbar } from './components/Toolbar/Toolbar';
@@ -59,13 +60,15 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <AuthProvider>
-        <ProtectedRoute>
-          <AppProvider>
-            <AppContent />
-          </AppProvider>
-        </ProtectedRoute>
-      </AuthProvider>
+      <ResponsiveWrapper>
+        <AuthProvider>
+          <ProtectedRoute>
+            <AppProvider>
+              <AppContent />
+            </AppProvider>
+          </ProtectedRoute>
+        </AuthProvider>
+      </ResponsiveWrapper>
     </ThemeProvider>
   );
 }

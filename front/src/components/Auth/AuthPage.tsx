@@ -1,17 +1,6 @@
-import React, { useState } from 'react';
-import { Login } from './Login';
-import { Register } from './Register';
+import React from 'react';
+import { BlueprintAuth } from './BlueprintAuth';
 
 export const AuthPage: React.FC = () => {
-  const [isLoginMode, setIsLoginMode] = useState(true);
-
-  const toggleMode = () => {
-    setIsLoginMode(prev => !prev);
-  };
-
-  return isLoginMode ? (
-    <Login onToggleMode={toggleMode} />
-  ) : (
-    <Register onToggleMode={toggleMode} />
-  );
+  return <BlueprintAuth />;
 };
