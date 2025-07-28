@@ -1,10 +1,5 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
 
-if (import.meta.env.DEV) {
-  console.log('🔗 API Base URL:', API_BASE_URL);
-  console.log('🌍 Environment:', import.meta.env.VITE_ENVIRONMENT || 'development');
-}
-
 export interface AuthUser {
   id: string;
   email: string;
@@ -75,6 +70,23 @@ class AuthAPI {
   async refreshToken(token: string): Promise<{ token: string }> {
     return this.request('/auth/refresh', {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  async getLastOpenedProject(token: string): Promise<{ project_id: string | null }> {
+    return this.request('/auth/last-opened-project', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  async updateLastOpenedProject(token: string, projectId: string): Promise<{ message: string }> {
+    return this.request(`/auth/last-opened-project?project_id=${encodeURIComponent(projectId)}`, {
+      method: 'PUT',
       headers: {
         Authorization: `Bearer ${token}`,
       },

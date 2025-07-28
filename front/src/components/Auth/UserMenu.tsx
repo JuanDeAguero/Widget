@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { LogOut, User, ChevronDown } from 'lucide-react';
+import { LogOut, User } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 const UserMenuContainer = styled.div`
@@ -12,18 +12,15 @@ const UserMenuContainer = styled.div`
 const UserButton = styled.button`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  padding: 0.5rem 0.75rem;
-  color: white;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 0;
   cursor: pointer;
   transition: all 0.2s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
+    opacity: 0.8;
   }
 `;
 
@@ -38,18 +35,6 @@ const UserAvatar = styled.div`
   color: white;
   font-weight: 600;
   font-size: 0.8rem;
-`;
-
-const UserName = styled.span`
-  font-size: 0.9rem;
-  font-weight: 500;
-`;
-
-const ChevronIcon = styled(ChevronDown)<{ $isOpen: boolean }>`
-  width: 16px;
-  height: 16px;
-  transition: transform 0.2s ease;
-  transform: rotate(${props => props.$isOpen ? '180deg' : '0deg'});
 `;
 
 const DropdownMenu = styled.div<{ $isOpen: boolean }>`
@@ -157,10 +142,6 @@ export const UserMenu: React.FC = () => {
         <UserAvatar>
           {getInitials(state.user.name, state.user.email)}
         </UserAvatar>
-        <UserName>
-          {getDisplayName(state.user.name, state.user.email)}
-        </UserName>
-        <ChevronIcon $isOpen={isOpen} />
       </UserButton>
 
       <DropdownMenu $isOpen={isOpen}>
