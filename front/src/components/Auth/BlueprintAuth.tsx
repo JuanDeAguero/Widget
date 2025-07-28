@@ -50,7 +50,7 @@ const CompileButton = styled.button`
   box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
 
   &:hover {
-    transform: translateX(-50%) translateY(-2px);
+    transform: translateX(-50%);
     box-shadow: 0 12px 40px rgba(16, 185, 129, 0.4);
   }
 
@@ -154,7 +154,6 @@ const BlueprintContainer = styled.div`
     height: 16px;
   }
 
-  /* Better placeholder visibility */
   input::placeholder {
     color: rgba(255, 255, 255, 0.7) !important;
     opacity: 1;
@@ -518,7 +517,13 @@ export const BlueprintAuth: React.FC = () => {
           onConnect={onConnect}
           nodeTypes={nodeTypes}
           fitView
-          defaultViewport={{ x: 0, y: 0, zoom: 1 }}
+          fitViewOptions={{
+            padding: 0.3,
+            maxZoom: 1.7,
+            minZoom: 1.7
+          }}
+          minZoom={1.7}
+          maxZoom={1.7}
         >
           <Background variant={BackgroundVariant.Dots} gap={20} size={1} />
           <Controls />

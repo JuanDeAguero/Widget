@@ -7,12 +7,24 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html, body {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+
   body {
     font-family: ${props => props.theme.fonts.primary};
     background-color: ${props => props.theme.colors.background};
     color: ${props => props.theme.colors.text};
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     user-select: none;
+  }
+
+  #root {
+    min-height: 100vh;
   }
 
   button {

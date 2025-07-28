@@ -1,19 +1,22 @@
-export interface WidgetBlueprint {
+export interface File {
   id: string;
   name: string;
-  type: 'widget' | 'component';
-  created: Date;
-  modified: Date;
+  type: 'widget' | 'component' | 'image' | 'icon' | 'blueprint' | 'database' | 'endpoint' | 'queue' | 'job';
+  path: string;
+  content?: any;
   thumbnail?: string;
+  project_id: string;
+  created_at: string;
+  updated_at: string;
 }
 
-export interface Asset {
+export interface OpenFile {
   id: string;
   name: string;
-  type: 'image' | 'icon' | 'blueprint';
-  path: string;
-  size?: number;
-  created: Date;
+  type: 'widget' | 'component' | 'image' | 'icon' | 'blueprint' | 'database' | 'endpoint' | 'queue' | 'job';
+  path?: string;
+  isModified?: boolean;
+  content?: any;
 }
 
 export interface UIElement {
@@ -34,6 +37,7 @@ export interface BlueprintNode {
   position: { x: number; y: number };
   data: {
     label: string;
+    nodeType?: string;
     inputs?: BlueprintPin[];
     outputs?: BlueprintPin[];
     properties?: Record<string, any>;
@@ -59,11 +63,19 @@ export interface BlueprintEdge {
 export interface WidgetProject {
   id: string;
   name: string;
-  assets: Asset[];
-  blueprints: WidgetBlueprint[];
+  files: File[];
   uiElements: UIElement[];
   nodes: BlueprintNode[];
   edges: BlueprintEdge[];
+}
+
+export interface Project {
+  id: string;
+  name: string;
+  user_id: number;
+  created_at: string;
+  updated_at: string;
+  files?: File[];
 }
 
 export type EditorMode = 'ui' | 'blueprint';

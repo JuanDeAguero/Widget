@@ -19,6 +19,7 @@ export const theme = {
   sizes: {
     headerHeight: '40px',
     toolbarHeight: '60px',
+    tabBarHeight: '32px',
     panelWidth: '300px',
     contentBrowserHeight: '200px',
   },
