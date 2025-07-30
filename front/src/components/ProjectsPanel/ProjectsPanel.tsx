@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { X, Plus, Edit2, Trash2, Folder } from 'lucide-react';
 import { useApp } from '../../contexts/AppContext';
 import { api } from '../../services/projectAPI';
-import type { Project } from '../../types';
+import type { Project } from '../../index';
 
 interface ProjectsPanelProps {
   isOpen: boolean;

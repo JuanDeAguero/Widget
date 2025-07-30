@@ -4,7 +4,7 @@ import { FileText, Image, Folder, Plus, Search, Layout, Database, Plug, ListTodo
 import { useApp } from '../../contexts/AppContext';
 import { Panel, PanelHeader, PanelContent, IconButton } from '../../styles/GlobalStyles';
 import { api } from '../../services/projectAPI';
-import type { File as ProjectFile } from '../../types';
+import type { File as ProjectFile } from '../../index';
 
 const ContentBrowserContainer = styled(Panel)`
   height: ${props => props.theme.sizes.contentBrowserHeight};
@@ -341,7 +341,7 @@ export function ContentBrowser({ isOpen }: ContentBrowserProps) {
     }
     
     const inMemoryState = getBlueprintState ? getBlueprintState(fileId) : null;
-    const projectFile = state.project.files.find(f => f.id === fileId);
+    const projectFile = state.project.files.find((f: ProjectFile) => f.id === fileId);
     
     if (inMemoryState && projectFile) {
       const savedContent = projectFile.content;
@@ -509,8 +509,8 @@ export function ContentBrowser({ isOpen }: ContentBrowserProps) {
             renderLoadingSkeleton()
           ) : (
             state.project.files
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .map((item) => (
+              .sort((a: ProjectFile, b: ProjectFile) => a.name.localeCompare(b.name))
+              .map((item: ProjectFile) => (
                 <ContentItem key={item.id} onClick={() => handleItemClick(item)}>
                   <ItemActions>
                     <ActionButton 
