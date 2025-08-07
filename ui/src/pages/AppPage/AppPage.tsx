@@ -15,7 +15,7 @@ import { DatabaseEditor } from '../../components/DatabaseEditor/DatabaseEditor';
 import { JobQueueEditor } from '../../components/JobQueueEditor/JobQueueEditor';
 import { JobEditor } from '../../components/JobEditor/JobEditor';
 import { useApp } from '../../contexts/AppContext';
-import { SEO } from '../../components/SEO/SEO';
+import { SEO } from '../../components/SEO';
 import {
   AppContainer,
   MainContent,

@@ -39,7 +39,7 @@ import {
 } from './LandingPage.styles.ts';
 import { ReactFlow, useReactFlow, ReactFlowProvider } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { SEO } from '../../components/SEO/SEO';
+import { SEO } from '../../components/SEO';
 
 const FloatingNodes: React.FC = () => {
   const { fitView } = useReactFlow();

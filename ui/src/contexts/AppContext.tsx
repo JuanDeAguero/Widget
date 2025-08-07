@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
-import type { WidgetProject, EditorMode, UIElement, BlueprintNode, BlueprintEdge, File, OpenFile } from '../types';
+import type { WidgetProject, EditorMode, UIElement, BlueprintNode, BlueprintEdge, File, OpenFile } from '../index';
 import { api } from '../services/projectAPI';
 import { authAPI } from '../services/authAPI';
 

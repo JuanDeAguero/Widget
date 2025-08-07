@@ -17,6 +17,7 @@ import { useApp } from '../../contexts/AppContext';
 import { CustomNode } from './CustomNode';
 import { CustomEdge } from './CustomEdge';
 import { CustomConnectionLine } from './CustomConnectionLine';
+import { api } from '../../services/projectAPI';
 
 const BlueprintContainer = styled.div`
   flex: 1;
@@ -490,6 +491,10 @@ export function BlueprintEditor() {
     };
 
     try {
+      if (state.project?.id && activeFile?.id) {
+        await api.projects.updateFile(state.project.id, activeFile.id, { content: blueprintContent });
+      }
+
       dispatch({
         type: 'OPEN_FILE',
         payload: {
@@ -508,8 +513,7 @@ export function BlueprintEditor() {
         type: 'UPDATE_FILE_MODIFIED',
         payload: { id: activeFile.id, isModified: false }
       });
-    }
-    finally {
+    } finally {
       window.dispatchEvent(new CustomEvent('save-end'));
     }
   }, [state.activeFileId, state.openFiles, state.project.id, nodes, edges, dispatch, getBlueprintState]);
